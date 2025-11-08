@@ -94,6 +94,45 @@ export async function segmentImage(imageBitmap, opts = {}) {
  * Blend simples preservando iluminação: converte pixels para HSL, substitui hue/saturation e reconstrói.
  * Implementação simples: aplica um overlay colorido com alpha proporcional à máscara.
  */
+/**
+ * Extrai o componente conectado (4-vizinhos) da máscara no ponto (cx, cy).
+ * Retorna um novo objeto { width, height, mask } onde mask contém apenas o componente (0/255).
+ */
+export function extractComponentMask(maskObj, cx, cy) {
+  if (!maskObj) throw new Error('extractComponentMask: maskObj é obrigatório');
+  const { width, height, mask } = maskObj;
+  if (cx < 0 || cy < 0 || cx >= width || cy >= height) return { width, height, mask: new Uint8ClampedArray(width * height) };
+
+  const idx = cy * width + cx;
+  if (mask[idx] === 0) {
+    // clique em área sem máscara
+    return { width, height, mask: new Uint8ClampedArray(width * height) };
+  }
+
+  const out = new Uint8ClampedArray(width * height);
+  const queue = [idx];
+  out[idx] = 255;
+
+  while (queue.length) {
+    const i = queue.pop();
+    const y = Math.floor(i / width);
+    const x = i % width;
+
+    // vizinhos 4-direções
+    const neighbors = [ [x-1,y], [x+1,y], [x,y-1], [x,y+1] ];
+    for (const [nx, ny] of neighbors) {
+      if (nx < 0 || ny < 0 || nx >= width || ny >= height) continue;
+      const ni = ny * width + nx;
+      if (mask[ni] && !out[ni]) {
+        out[ni] = 255;
+        queue.push(ni);
+      }
+    }
+  }
+
+  return { width, height, mask: out };
+}
+
 export function applyColorToMask(ctx, maskObj, color = '#ff0000', alpha = 0.8) {
   if (!ctx || !maskObj) throw new Error('applyColorToMask: ctx e maskObj são obrigatórios');
   const { width, height, mask } = maskObj;
@@ -127,7 +166,8 @@ export function applyColorToMask(ctx, maskObj, color = '#ff0000', alpha = 0.8) {
 const imageProcessor = {
   initializeSegmenter,
   segmentImage,
-  applyColorToMask
+  applyColorToMask,
+  extractComponentMask
 };
 
 export default imageProcessor;
