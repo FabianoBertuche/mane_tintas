@@ -1,0 +1,157 @@
+/* Estilos Globais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+/* Layout Principal */
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    background-color: #2c3e50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+.app-main {
+    flex: 1;
+    display: flex;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.tools-panel {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.canvas-container {
+    flex: 1;
+    position: relative;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Componente ImageUploader */
+.image-uploader {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.file-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 1rem 0;
+}
+
+.upload-info {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* Componente ColorPalette */
+.color-palette {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.colors-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+
+.color-button {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.color-button:hover {
+    transform: scale(1.1);
+}
+
+.color-button.selected {
+    border-color: #2c3e50;
+    transform: scale(1.1);
+}
+
+.custom-color {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.color-picker {
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* Componente CanvasEditor */
+.editor-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+}
+
+.canvas-placeholder {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 1.2rem;
+}
+
+.processing-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+
+/* Footer */
+.app-footer {
+    background-color: #2c3e50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
