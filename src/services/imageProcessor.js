@@ -97,7 +97,6 @@ export async function segmentImage(imageBitmap, opts = {}) {
 export function applyColorToMask(ctx, maskObj, color = '#ff0000', alpha = 0.8) {
   if (!ctx || !maskObj) throw new Error('applyColorToMask: ctx e maskObj são obrigatórios');
   const { width, height, mask } = maskObj;
-  const canvas = ctx.canvas;
   // captura imagem atual
   const imageData = ctx.getImageData(0, 0, width, height);
   const data = imageData.data;
@@ -125,8 +124,10 @@ export function applyColorToMask(ctx, maskObj, color = '#ff0000', alpha = 0.8) {
   ctx.putImageData(imageData, 0, 0);
 }
 
-export default {
+const imageProcessor = {
   initializeSegmenter,
   segmentImage,
   applyColorToMask
 };
+
+export default imageProcessor;
